@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Add custom colors for our student ID cards
+				education: {
+					'blue': '#1E3A8A',
+					'light-blue': '#3B82F6',
+					'red': '#DC2626',
+					'green': '#10B981',
+					'yellow': '#FBBF24',
+					'purple': '#8B5CF6',
 				}
 			},
 			borderRadius: {
