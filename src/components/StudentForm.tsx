@@ -1,10 +1,21 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Upload } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
@@ -32,7 +43,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
   const [classAndDivision, setClassAndDivision] = useState(initialData?.classAndDivision || '');
   const [allergies, setAllergies] = useState<string[]>(initialData?.allergies || []);
   const [photo, setPhoto] = useState<string>(initialData?.photo || DEFAULT_PHOTO);
-  // const [rackNumber, setRackNumber] = useState(initialData?.rackNumber || '');
+  const [uploading, setUploading] = useState(false);
   const [busRouteNumber, setBusRouteNumber] = useState(initialData?.busRouteNumber || '');
 
   const { toast } = useToast();
@@ -47,23 +58,50 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
     { id: 'gluten', label: 'Gluten' },
   ];
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [studentData, setStudentData] = useState<StudentData>({
+    name: '',
+    classAndDivision: '',
+    rollNumber: '',
+    busRouteNumber: '',
+    allergies: [],
+    photo: '',
+    createdAt: Date.now(),
+  });
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 1024 * 1024) {
-        toast({
-          title: "File too large",
-          description: "Please upload an image smaller than 1MB",
-          variant: "destructive",
-        });
-        return;
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "student_uploads");  // Must match your Cloudinary preset name
+
+    try {
+      // Send the file to Cloudinary
+      const response = await fetch("https://api.cloudinary.com/v1_1/dkl2kdu7e/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.error?.message || "Upload failed");
       }
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhoto(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setPhoto(data.secure_url);  // Set the photo state to the uploaded URL
+
+      toast({
+        title: "Upload successful",
+        description: "Photo has been uploaded",
+      });
+    } catch (error: any) {
+      console.error("Upload Error:", error);
+      toast({
+        title: "Upload failed",
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
@@ -78,6 +116,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("Student Data:", studentData);
     if (!name || !rollNumber || !classAndDivision || !busRouteNumber) {
       toast({
         title: "Validation Error",
@@ -153,17 +192,6 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
             </Select>
           </div>
 
-          {/* <div className="space-y-2">
-            <Label htmlFor="rackNumber">Rack Number *</Label>
-            <Input
-              id="rackNumber"
-              value={rackNumber}
-              onChange={(e) => setRackNumber(e.target.value)}
-              placeholder="e.g. A12"
-              required
-            />
-          </div> */}
-
           <div className="space-y-2">
             <Label htmlFor="busRouteNumber">Bus Route Number *</Label>
             <Select
@@ -196,7 +224,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
                   />
                   <label
                     htmlFor={`allergy-${allergy.id}`}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="text-sm font-medium leading-none"
                   >
                     {allergy.label}
                   </label>
@@ -223,9 +251,15 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
                   onChange={handlePhotoUpload}
                   className="absolute inset-0 opacity-0 cursor-pointer z-10"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 hover:opacity-100 transition-opacity z-0">
-                  <Upload className="h-8 w-8 text-white" />
-                </div>
+                {uploading ? (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <span className="text-white text-sm">Uploading...</span>
+                  </div>
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 hover:opacity-100 transition-opacity z-0">
+                    <Upload className="h-8 w-8 text-white" />
+                  </div>
+                )}
               </div>
               <p className="text-xs text-muted-foreground">Click to upload (Max: 1MB)</p>
             </div>
@@ -239,3 +273,5 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
 };
 
 export default StudentForm;
+
+
