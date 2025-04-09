@@ -26,6 +26,7 @@ export interface StudentData {
   classAndDivision: string;
   allergies: string[];
   photo: string;
+  rackNumber: string;
   busRouteNumber: string;
   createdAt: number;
 }
@@ -44,6 +45,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
   const [allergies, setAllergies] = useState<string[]>(initialData?.allergies || []);
   const [photo, setPhoto] = useState<string>(initialData?.photo || DEFAULT_PHOTO);
   const [uploading, setUploading] = useState(false);
+  const [rackNumber, setRackNumber] = useState(initialData?.rackNumber || '');
   const [busRouteNumber, setBusRouteNumber] = useState(initialData?.busRouteNumber || '');
 
   const { toast } = useToast();
@@ -65,6 +67,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
     busRouteNumber: '',
     allergies: [],
     photo: '',
+    rackNumber: '',
     createdAt: Date.now(),
   });
 
@@ -133,6 +136,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
       allergies,
       photo,
       busRouteNumber,
+      rackNumber,
       createdAt: Date.now(),
     });
 
@@ -192,6 +196,17 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
             </Select>
           </div>
 
+          <div className="space-y-2">
+            <Label htmlFor="rackNumber">Rack Number *</Label>
+            <Input
+              id="rackNumber"
+              value={rackNumber}
+              onChange={(e) => setRackNumber(e.target.value)}
+              placeholder="e.g. A12"
+              required
+            />
+          </div>
+          
           <div className="space-y-2">
             <Label htmlFor="busRouteNumber">Bus Route Number *</Label>
             <Select
