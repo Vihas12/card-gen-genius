@@ -28,7 +28,7 @@ A ReactJS-based web app to generate customizable student ID cards. Easily input 
 
 | Form Input | Live Preview | Template Options |
 |------------|--------------|------------------|
-| ![Form](./screenshots/form.png) | ![Preview](./screenshots/preview.png) | ![Templates](./screenshots/templates.png) |
+| ![Form](./screenshots/form.png) | ![Preview](./screenshots/preview.png) | ![Templates](./screenshots/template.png) |
 
 ## 🧑‍💻 How to Use
 
