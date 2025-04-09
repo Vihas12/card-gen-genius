@@ -109,7 +109,7 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
   const Template2 = () => (
     <div className="id-card id-card-template2 rounded-lg overflow-hidden" ref={cardRef}>
       <div className="relative h-24 overflow-hidden">
-        <div className="absolute inset-0 bg-education-purple opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-education-blue to-education-purple opacity-80"></div>
         <div className="relative z-10 flex items-center justify-center h-full">
           <h2 className="text-2xl font-bold text-white">UNITY SCHOOL</h2>
         </div>
@@ -121,30 +121,30 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
         </div>
         
         <div className="text-center mb-4">
-          <h3 className="text-xl font-bold">{studentData.name}</h3>
+          <h3 className="text-xl font-bold text-white">{studentData.name}</h3>
           <div className="flex justify-center space-x-3 mt-1">
-            <Badge variant="outline" className="bg-white/20 text-white">
+            <Badge variant="outline" className="bg-white/20 text-white border-white/30">
               {studentData.classAndDivision}
             </Badge>
-            <Badge variant="outline" className="bg-white/20 text-white">
+            <Badge variant="outline" className="bg-white/20 text-white border-white/30">
               Roll: {studentData.rollNumber}
             </Badge>
           </div>
         </div>
         
-        <div className="w-full bg-white/10 rounded-lg p-3 space-y-2 mb-4">
-          <div className="flex justify-between text-sm">
+        <div className="w-full bg-white/10 rounded-lg p-3 space-y-2 mb-4 backdrop-blur-sm">
+          <div className="flex justify-between text-sm text-white">
             <span className="font-medium">Rack Number:</span>
             <span>{studentData.rackNumber}</span>
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-sm text-white">
             <span className="font-medium">Bus Route:</span>
             <span>{studentData.busRouteNumber}</span>
           </div>
           
           {studentData.allergies.length > 0 && (
             <div className="mt-3 pt-2 border-t border-white/20">
-              <p className="text-sm font-medium mb-2">Allergies:</p>
+              <p className="text-sm font-medium mb-2 text-white">Allergies:</p>
               <div className="flex flex-wrap gap-1">
                 {studentData.allergies.map((allergy) => (
                   <Badge key={allergy} className="bg-red-500 text-white border-none text-xs">
