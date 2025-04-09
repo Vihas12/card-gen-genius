@@ -95,8 +95,8 @@
 }
 
 .id-card {
-  width: 338px;
-  height: 550px;
+  width: 380px;
+  height: 620px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -112,8 +112,8 @@
 }
 
 .photo-container {
-  width: 130px;
-  height: 130px;
+  width: 150px;
+  height: 150px;
   overflow: hidden;
   border-radius: 50%;
   margin: 0 auto;
@@ -142,3 +142,4 @@
   width: 100%;
   height: 100%;
 }
+
