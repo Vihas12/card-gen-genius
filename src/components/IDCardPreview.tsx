@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -169,7 +168,7 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
       <div className="mb-4">
         {template === 'template1' ? <Template1 /> : <Template2 />}
       </div>
-      <Button onClick={downloadCard} className="mt-4 w-full max-w-[380px]">
+      <Button onClick={downloadCard} className="mt-4 w-full max-w-[450px]">
         <Download className="mr-2 h-4 w-4" /> Download as PNG
       </Button>
     </Card>
@@ -177,4 +176,3 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
 };
 
 export default IDCardPreview;
-
