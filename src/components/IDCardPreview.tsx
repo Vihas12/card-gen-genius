@@ -75,10 +75,6 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
         
         <div className="w-full space-y-3 mb-5">
           <div className="flex justify-between text-base">
-            <span className="font-medium">Rack Number:</span>
-            <span>{studentData.rackNumber}</span>
-          </div>
-          <div className="flex justify-between text-base">
             <span className="font-medium">Bus Route:</span>
             <span>{studentData.busRouteNumber}</span>
           </div>
@@ -107,7 +103,7 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
 
   const Template2 = () => (
     <div className="id-card id-card-template2 rounded-lg overflow-hidden" ref={cardRef}>
-      <div className="relative h-28 overflow-hidden">
+      <div className="relative h-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-education-blue to-education-purple opacity-80"></div>
         <div className="relative z-10 flex items-center justify-center h-full">
           <h2 className="text-2xl font-bold text-white">UNITY SCHOOL</h2>
@@ -132,10 +128,10 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
         </div>
         
         <div className="w-full bg-white/10 rounded-lg p-4 space-y-3 mb-5 backdrop-blur-sm">
-          <div className="flex justify-between text-base text-white">
+          {/* <div className="flex justify-between text-base text-white">
             <span className="font-medium">Rack Number:</span>
             <span>{studentData.rackNumber}</span>
-          </div>
+          </div> */}
           <div className="flex justify-between text-base text-white">
             <span className="font-medium">Bus Route:</span>
             <span>{studentData.busRouteNumber}</span>

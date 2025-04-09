@@ -15,7 +15,6 @@ export interface StudentData {
   classAndDivision: string;
   allergies: string[];
   photo: string;
-  rackNumber: string;
   busRouteNumber: string;
   createdAt: number;
 }
@@ -33,7 +32,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
   const [classAndDivision, setClassAndDivision] = useState(initialData?.classAndDivision || '');
   const [allergies, setAllergies] = useState<string[]>(initialData?.allergies || []);
   const [photo, setPhoto] = useState<string>(initialData?.photo || DEFAULT_PHOTO);
-  const [rackNumber, setRackNumber] = useState(initialData?.rackNumber || '');
+  // const [rackNumber, setRackNumber] = useState(initialData?.rackNumber || '');
   const [busRouteNumber, setBusRouteNumber] = useState(initialData?.busRouteNumber || '');
 
   const { toast } = useToast();
@@ -59,7 +58,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
         });
         return;
       }
-      
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setPhoto(reader.result as string);
@@ -78,8 +77,8 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!name || !rollNumber || !classAndDivision || !rackNumber || !busRouteNumber) {
+
+    if (!name || !rollNumber || !classAndDivision || !busRouteNumber) {
       toast({
         title: "Validation Error",
         description: "Please fill all required fields",
@@ -94,7 +93,6 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
       classAndDivision,
       allergies,
       photo,
-      rackNumber,
       busRouteNumber,
       createdAt: Date.now(),
     });
@@ -155,7 +153,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
             </Select>
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label htmlFor="rackNumber">Rack Number *</Label>
             <Input
               id="rackNumber"
@@ -164,12 +162,12 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
               placeholder="e.g. A12"
               required
             />
-          </div>
+          </div> */}
 
           <div className="space-y-2">
             <Label htmlFor="busRouteNumber">Bus Route Number *</Label>
-            <Select 
-              value={busRouteNumber} 
+            <Select
+              value={busRouteNumber}
               onValueChange={setBusRouteNumber}
               required
             >
@@ -210,16 +208,22 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSubmit, initialData }) => {
           <div className="space-y-2">
             <Label htmlFor="photo">Student Photo</Label>
             <div className="flex flex-col items-center space-y-2">
-              <div className="photo-upload-container">
-                {photo && <img src={photo} alt="Student" className="object-cover" />}
+              <div className="relative w-48 h-64 border rounded overflow-hidden photo-upload-container">
+                {photo && (
+                  <img
+                    src={photo}
+                    alt="Student"
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 <input
                   type="file"
                   id="photo"
                   accept="image/*"
                   onChange={handlePhotoUpload}
-                  className="absolute inset-0 opacity-0 cursor-pointer"
+                  className="absolute inset-0 opacity-0 cursor-pointer z-10"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 hover:opacity-100 transition-opacity">
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 hover:opacity-100 transition-opacity z-0">
                   <Upload className="h-8 w-8 text-white" />
                 </div>
               </div>
