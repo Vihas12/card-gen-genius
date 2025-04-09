@@ -98,9 +98,9 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
           )}
         </div>
         
-        <div className="mt-auto mb-4">
-          <QRCodeSVG value={qrCodeData} size={100} />
-          <p className="text-xs text-center mt-1 text-gray-500">Scan for complete details</p>
+        <div className="mt-auto mb-4 bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm w-full flex flex-col items-center">
+          <QRCodeSVG value={qrCodeData} size={100} bgColor="#FFFFFF" fgColor="#333333" />
+          <p className="text-xs text-center mt-2 text-gray-500">Scan for complete details</p>
         </div>
       </div>
     </div>
@@ -156,9 +156,9 @@ const IDCardPreview: React.FC<IDCardPreviewProps> = ({ studentData, template }) 
           )}
         </div>
         
-        <div className="mt-auto mb-2 bg-white p-2 rounded-lg">
-          <QRCodeSVG value={qrCodeData} size={100} />
-          <p className="text-xs text-center mt-1 text-gray-500">Scan for complete details</p>
+        <div className="mt-auto mb-2 bg-white p-3 rounded-lg shadow-md w-full flex flex-col items-center">
+          <QRCodeSVG value={qrCodeData} size={100} bgColor="#FFFFFF" fgColor="#333333" />
+          <p className="text-xs text-center mt-2 text-gray-600 font-medium">Scan for complete details</p>
         </div>
       </div>
     </div>
